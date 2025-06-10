@@ -3,7 +3,7 @@ import time
 
 def main():
     st.set_page_config(
-        page_title="Kalkulator Pengukuran Berbunga",
+        page_title="Kalkulator Pengukuran", # Judul di tab browser
         layout="centered",
         initial_sidebar_state="expanded"
     )
@@ -29,7 +29,7 @@ def main():
             margin: 10px;
         }
         .stRadio > label {
-            color: #333; /* Warna teks radio button */
+            color: #333;
             font-weight: bold;
         }
         .stNumberInput > div > label,
@@ -38,7 +38,7 @@ def main():
             font-weight: bold;
         }
         .stButton > button {
-            background-color: #4CAF50; /* Warna tombol */
+            background-color: #4CAF50;
             color: white;
             border-radius: 8px;
             padding: 10px 20px;
@@ -51,7 +51,7 @@ def main():
             background-color: #45a049;
         }
         .stSuccess {
-            background-color: rgba(144, 238, 144, 0.8); /* Background sukses transparan hijau muda */
+            background-color: rgba(144, 238, 144, 0.8);
             color: #1a5e20;
             border-radius: 8px;
             padding: 10px;
@@ -59,33 +59,40 @@ def main():
             font-weight: bold;
         }
         h1, h2, h3 {
-            color: #2F4F4F; /* Dark Slate Gray untuk judul */
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.7); /* Tambah bayangan putih */
+            color: #2F4F4F;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
         }
         p {
-            color: #4682B4; /* Steel Blue untuk paragraf */
+            color: #4682B4;
         }
-        .flower-animation-container {
-            font-size: 3em; /* Ukuran emoji */
+        .animation-container {
+            font-size: 2.5em; /* Ukuran emoji */
             text-align: center;
             margin-bottom: 20px;
-            height: 50px; /* Tinggi untuk animasi */
+            height: 80px; /* Cukup tinggi untuk animasi */
+            overflow: hidden; /* Pastikan tidak ada scrollbar dari animasi */
         }
         </style>
         """,
         unsafe_allow_html=True
     )
 
-    # --- Animasi Bunga Teks di Awal ---
-    placeholder_awal = st.empty()
-    for i in range(5):
-        flower_string = " " * (5 - i) + "🌸" * i + "🌼" * (5 - i) + " " * i
-        placeholder_awal.markdown(f"<div class='flower-animation-container'>{flower_string}</div>", unsafe_allow_html=True)
-        time.sleep(0.1) # Jeda untuk melihat animasi
-    placeholder_awal.empty() # Hapus animasi setelah selesai
+    # --- Animasi Pembuka: Kelopak Bunga Berjatuhan ---
+    placeholder_animasi_awal = st.empty()
+    emojis = ["🌸", "🌺", "🌼", "🌷", "🏵️"]
+    for _ in range(3): # Mengulang animasi beberapa kali
+        for i in range(10): # Jumlah frame animasi
+            frame = ""
+            for j in range(len(emojis)):
+                pos = (i + j * 2) % 10
+                frame += " " * pos + emojis[j] + " " * (9 - pos)
+            
+            placeholder_animasi_awal.markdown(f"<div class='animation-container'>{frame}</div>", unsafe_allow_html=True)
+            time.sleep(0.1)
+    placeholder_animasi_awal.empty() # Hapus setelah selesai
 
-    st.markdown("<h1 style='text-align: center; color: #8B4513;'>🌻 Kalkulator Pengukuran Berbunga 🌸</h1>", unsafe_allow_html=True)
-    st.write("<p style='text-align: center; font-size: 1.1em;'>Pilih jenis pengukuran dan unit untuk melakukan konversi dengan sentuhan keindahan!</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #8B4513;'>📏 Kalkulator Pengukuran ⚖️🌡️</h1>", unsafe_allow_html=True)
+    st.write("<p style='text-align: center; font-size: 1.1em;'>Konversi berbagai unit pengukuran dengan mudah dan interaktif.</p>", unsafe_allow_html=True)
 
     st.markdown("---")
 
@@ -104,13 +111,24 @@ def main():
 
     st.markdown("---")
 
-    # --- Animasi Bunga Teks di Akhir ---
-    placeholder_akhir = st.empty()
-    for i in range(5):
-        flower_string = " " * i + "🌺" * (5 - i) + "🌷" * i + " " * (5 - i)
-        placeholder_akhir.markdown(f"<div class='flower-animation-container'>{flower_string}</div>", unsafe_allow_html=True)
-        time.sleep(0.1) # Jeda untuk melihat animasi
-    placeholder_akhir.empty() # Hapus animasi setelah selesai
+    # --- Animasi Penutup: Bunga Mekar/Berkembang ---
+    placeholder_animasi_akhir = st.empty()
+    bunga_mekar = [
+        "🌱", # Tunas
+        "🌿", # Daun
+        "🌷", # Kuncup
+        "🌸", # Mekar sebagian
+        "🌺"  # Mekar penuh
+    ]
+    for _ in range(2): # Mengulang animasi
+        for i in range(len(bunga_mekar)):
+            placeholder_animasi_akhir.markdown(f"<div class='animation-container'>{bunga_mekar[i] * (i + 1)}</div>", unsafe_allow_html=True)
+            time.sleep(0.2)
+        for i in range(len(bunga_mekar) - 2, -1, -1): # Kembali layu
+            placeholder_animasi_akhir.markdown(f"<div class='animation-container'>{bunga_mekar[i] * (i + 1)}</div>", unsafe_allow_html=True)
+            time.sleep(0.2)
+    placeholder_animasi_akhir.empty() # Hapus setelah selesai
+
 
     st.markdown("<p style='text-align: center;'>Semoga kalkulator ini bermanfaat!</p>", unsafe_allow_html=True)
 
@@ -145,10 +163,8 @@ def kalkulator_panjang():
             "Kaki": 0.3048
         }
 
-        # Konversi ke meter terlebih dahulu
         nilai_dalam_meter = nilai * faktor_ke_meter[satuan_asal]
 
-        # Konversi dari meter ke satuan target
         if satuan_target == "Meter":
             hasil = nilai_dalam_meter
         elif satuan_target == "Centimeter":
