@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 
 def main():
     st.set_page_config(
@@ -12,7 +13,7 @@ def main():
         """
         <style>
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1547432026-64154b5ee57f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); /* Ganti dengan URL gambar Anda */
+            background-image: url("https://images.unsplash.com/photo-1547432026-64154b5ee57f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); /* Ganti dengan URL gambar bunga Anda */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -64,13 +65,25 @@ def main():
         p {
             color: #4682B4; /* Steel Blue untuk paragraf */
         }
+        .flower-animation-container {
+            font-size: 3em; /* Ukuran emoji */
+            text-align: center;
+            margin-bottom: 20px;
+            height: 50px; /* Tinggi untuk animasi */
+        }
         </style>
         """,
         unsafe_allow_html=True
     )
 
-    # --- Animasi Bunga di Awal ---
-    st.image("animasi_awal.gif", use_container_width=True, caption="Selamat Datang!") # Perubahan di sini!
+    # --- Animasi Bunga Teks di Awal ---
+    placeholder_awal = st.empty()
+    for i in range(5):
+        flower_string = " " * (5 - i) + "🌸" * i + "🌼" * (5 - i) + " " * i
+        placeholder_awal.markdown(f"<div class='flower-animation-container'>{flower_string}</div>", unsafe_allow_html=True)
+        time.sleep(0.1) # Jeda untuk melihat animasi
+    placeholder_awal.empty() # Hapus animasi setelah selesai
+
     st.markdown("<h1 style='text-align: center; color: #8B4513;'>🌻 Kalkulator Pengukuran Berbunga 🌸</h1>", unsafe_allow_html=True)
     st.write("<p style='text-align: center; font-size: 1.1em;'>Pilih jenis pengukuran dan unit untuk melakukan konversi dengan sentuhan keindahan!</p>", unsafe_allow_html=True)
 
@@ -90,8 +103,15 @@ def main():
         kalkulator_suhu()
 
     st.markdown("---")
-    # --- Animasi Bunga di Akhir ---
-    st.image("animasi_akhir.gif", use_container_width=True, caption="Terima Kasih!") # Perubahan di sini!
+
+    # --- Animasi Bunga Teks di Akhir ---
+    placeholder_akhir = st.empty()
+    for i in range(5):
+        flower_string = " " * i + "🌺" * (5 - i) + "🌷" * i + " " * (5 - i)
+        placeholder_akhir.markdown(f"<div class='flower-animation-container'>{flower_string}</div>", unsafe_allow_html=True)
+        time.sleep(0.1) # Jeda untuk melihat animasi
+    placeholder_akhir.empty() # Hapus animasi setelah selesai
+
     st.markdown("<p style='text-align: center;'>Semoga kalkulator ini bermanfaat!</p>", unsafe_allow_html=True)
 
 
